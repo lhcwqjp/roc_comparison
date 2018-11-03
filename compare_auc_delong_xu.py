@@ -194,7 +194,7 @@ def delong_roc_variance(ground_truth, predictions, sample_weight=None):
     return aucs[0], delongcov
 
 
-def delong_roc_test(ground_truth, predictions_one, predictions_two, sample_weigt=None):
+def delong_roc_test(ground_truth, predictions_one, predictions_two, sample_weight=None):
     """
     Computes log(p-value) for hypothesis that two ROC AUCs are different
     Args:
@@ -204,7 +204,7 @@ def delong_roc_test(ground_truth, predictions_one, predictions_two, sample_weigt
        predictions_two: predictions of the second model,
           np.array of floats of the probability of being class 1
     """
-    order, label_1_count = compute_ground_truth_statistics(ground_truth)
+    order, label_1_count = compute_ground_truth_statistics(ground_truth, sample_weight)
     predictions_sorted_transposed = np.vstack((predictions_one, predictions_two))[:, order]
     aucs, delongcov = fastDeLong(predictions_sorted_transposed, label_1_count)
     print(aucs, delongcov)
